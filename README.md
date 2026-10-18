@@ -55,4 +55,6 @@ Com lombada à direita, as colunas são espelhadas.
 
 1. Crie um repositório no GitHub e envie este projeto (`git remote add origin ...` e `git push -u origin main`).
 2. No repositório: **Settings → Pages → Build and deployment → Deploy from a branch**, escolha `main` e a pasta `/ (root)`.
-3. O site fica em `https://<usuario>.github.io/<repositorio>/`.
+3. Em **Settings → Pages → Custom domain**, informe `pm.pedro-rios.com` (o arquivo `CNAME` na raiz já define esse domínio) e marque **Enforce HTTPS** quando ficar disponível.
+4. No DNS de `pedro-rios.com`, crie um registro `CNAME` com nome `pm` apontando para `phmrios.github.io`.
+5. O site fica em `https://pm.pedro-rios.com/`.
