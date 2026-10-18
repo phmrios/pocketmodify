@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketModify</title>
+    <meta name="description" content="Transforme PDFs e imagens em cadernos de bolso de uma folha A4.">
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css">
+    <script src="vendor/pdf-lib.min.js" defer></script>
+    <script src="vendor/pdf.min.js" defer></script>
+    <script src="js/pocketmod.js" defer></script>
+    <script src="js/sources.js" defer></script>
+    <script src="js/templates.js" defer></script>
+    <script src="js/preview.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1 class="logo"><span class="accent">Pocket</span>Modify</h1>
+            <p class="subtitle">Um caderninho de 8 páginas em uma folha A4.</p>
+        </header>
+
+        <section class="upload-section">
+            <div id="drop-zone" class="drop-zone" role="button" tabindex="0" aria-label="Selecionar PDFs ou imagens" aria-describedby="file-hint">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <line x1="9" y1="15" x2="12" y2="12"></line>
+                    <line x1="15" y1="15" x2="12" y2="12"></line>
+                </svg>
+                <h2>Arraste PDFs ou imagens aqui</h2>
+                <p>ou clique para selecionar</p>
+                <span id="file-hint" class="file-hint">Cada 8 páginas viram uma folha. Tudo é processado no seu navegador.</span>
+            </div>
+            <input type="file" id="file-input" accept="application/pdf,.pdf,image/*" multiple hidden>
+
+            <div class="templates">
+                <span>Ou comece por um modelo:</span>
+                <button type="button" class="chip" data-template="agenda">Agenda semanal</button>
+                <button type="button" class="chip" data-template="compras">Lista de compras</button>
+                <button type="button" class="chip" data-template="caderno">Caderno pautado</button>
+            </div>
+
+            <p id="error-message" class="error-message hidden" role="alert"></p>
+            <p id="status-text" class="status-text" role="status" aria-live="polite"></p>
+        </section>
+
+        <section id="editor" class="panel hidden" aria-labelledby="editor-title">
+            <div class="panel-header">
+                <div>
+                    <h2 id="editor-title">Páginas</h2>
+                    <p id="page-summary" class="muted"></p>
+                </div>
+                <div class="toolbar">
+                    <button type="button" id="add-files-btn" class="secondary-btn">+ Arquivos</button>
+                    <button type="button" id="add-blank-btn" class="secondary-btn">+ Página em branco</button>
+                    <button type="button" id="clear-btn" class="ghost-btn">Limpar</button>
+                </div>
+            </div>
+
+            <p class="muted small">Arraste as miniaturas para reordenar (ou use as setas).</p>
+            <ol id="page-grid" class="page-grid"></ol>
+
+            <div class="options">
+                <fieldset>
+                    <legend>Páginas em branco</legend>
+                    <label><input type="radio" name="filler" value="blank" checked> Lisas</label>
+                    <label><input type="radio" name="filler" value="lined"> Pautadas</label>
+                    <label><input type="radio" name="filler" value="grid"> Quadriculadas</label>
+                    <label><input type="radio" name="filler" value="dots"> Pontilhadas</label>
+                </fieldset>
+                <fieldset>
+                    <legend>Lombada</legend>
+                    <label><input type="radio" name="binding" value="left" checked> Esquerda</label>
+                    <label><input type="radio" name="binding" value="right"> Direita (estilo mangá)</label>
+                </fieldset>
+            </div>
+        </section>
+
+        <section id="result" class="panel hidden" aria-labelledby="result-title">
+            <div class="panel-header">
+                <div>
+                    <h2 id="result-title">Pré-visualização</h2>
+                    <p class="muted">Imprima em A4 paisagem, só na frente, em tamanho real (100%).</p>
+                </div>
+                <button type="button" id="download-btn" class="primary-btn" disabled>Baixar PDF</button>
+            </div>
+            <div id="preview" class="preview"></div>
+        </section>
+
+        <details class="panel folding-guide">
+            <summary>Como dobrar?</summary>
+            <ol class="steps">
+                <li>Imprima a folha apenas na frente, em A4 paisagem.</li>
+                <li>Dobre ao meio no sentido do comprimento (estilo cachorro-quente), vinque bem e abra.</li>
+                <li>Dobre ao meio no sentido da largura (estilo hambúrguer), vinque e abra.</li>
+                <li>Dobre as duas bordas laterais até o vinco central, vinque e abra.</li>
+                <li>Dobre de novo na largura e, partindo da dobra, corte sobre a linha tracejada até o primeiro vinco.</li>
+                <li>Abra, dobre ao comprido com a impressão para fora, empurre as pontas para o centro até formar uma cruz e feche o caderninho com a capa por fora.</li>
+            </ol>
+        </details>
+    </main>
+</body>
+</html>
